@@ -1,26 +1,35 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import Interfaces.Board;
 import Interfaces.Direction;
 
-public class DefaultBoard implements Board{
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Optional;
+
+public class DefaultBoard implements Board {
 
 	private static final int[] startValues = { 2, 4 };
 	private static final int[] possibleBValues = { 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048 };
-	private static final int SIZE = 4;
+	private static final int DEFAULT_SIZE = 4;
 	private Optional<Integer>[][] cells;
+	private int boardSize;
+	private int score;
 
 	public DefaultBoard() {
+		this(DEFAULT_SIZE);
+	}
+
+	public DefaultBoard(int size) {
+		boardSize = size;
+		score = 0;
 		initBoard();
 	}
 
 	@SuppressWarnings("unchecked")
 	private void initBoard() {
-		cells = new Optional[SIZE][SIZE];
-		for (int i=0; i<SIZE; i++)
-			for(int j=0; j<SIZE; j++)
+		cells = new Optional[boardSize][boardSize];
+		for (int i=0; i< boardSize; i++)
+			for(int j=0; j< boardSize; j++)
 				cells[i][j] = Optional.empty();
 		addCell();
 		addCell();
@@ -36,9 +45,9 @@ public class DefaultBoard implements Board{
 	}
 
 	private List<Integer[]> availableSpace() {
-		final List<Integer[]> list = new ArrayList<Integer[]>(SIZE*SIZE);
-		for (int i=0; i<SIZE; i++)
-			for(int j=0; j<SIZE; j++)
+		final List<Integer[]> list = new ArrayList<Integer[]>(boardSize * boardSize);
+		for (int i=0; i< boardSize; i++)
+			for(int j=0; j< boardSize; j++)
 				if (!cells[i][j].isPresent())
 					list.add(new Integer[] {i, j});
 		return list;
@@ -46,13 +55,28 @@ public class DefaultBoard implements Board{
 
 	@Override
 	public Optional<Integer> cell(int x, int y) {
-		return cells[x][y];
+		if (x < boardSize && x >=0 && y < boardSize && y >=0) {
+			return cells[x][y];
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public Board move(Direction dir) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (dir) {
+			case Up:
+				break;
+			case Down:
+				break;
+			case Left:
+				break;
+			case Right:
+				break;
+			default:
+				throw new InputMismatchException("Wrong direction!");
+		}
+		return this;
 	}
 
 	@Override
@@ -80,9 +104,9 @@ public class DefaultBoard implements Board{
 	}
 
 	public void show(){
-		for (int i=0; i<SIZE; i++)
+		for (int i=0; i< boardSize; i++)
 		{
-			for(int j=0; j<SIZE; j++)
+			for(int j=0; j< boardSize; j++)
 				if (cells[i][j].isPresent())
 					System.out.printf("%-3d", cells[i][j].get());
 				else
@@ -91,4 +115,12 @@ public class DefaultBoard implements Board{
 		}
 	}
 
+	public int getBoardSize() {
+		return boardSize;
+	}
+
+	@Override
+	public int getScore() {
+		return score;
+	}
 }

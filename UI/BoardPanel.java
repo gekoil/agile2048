@@ -1,22 +1,28 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import Interfaces.Board;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.Optional;
 
-import javax.swing.JPanel;
-
-public class BoardPanel extends JPanel{
+public class BoardPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private static final Color BG_COLOR = new Color(0xbbada0);
 	private static final String FONT_NAME = "Arial";
-	private static final int CELL_SIZE = 64;
+	public  static final int CELL_SIZE = 64;
 	private static final int CELL_MARGIN = 16;
-	private final DefaultBoard board = new DefaultBoard();
-	
+	private Board board;
+
+	BoardPanel() {
+		this(new DefaultBoard());
+	}
+
+	BoardPanel(Board board) {
+		super();
+		this.board = board;
+		int size = board.getBoardSize() * (CELL_MARGIN + CELL_SIZE) + CELL_MARGIN;
+		setSize(size, size + CELL_SIZE);
+	}
 	
 	@Override
 	public void paint(Graphics g) {
@@ -28,6 +34,9 @@ public class BoardPanel extends JPanel{
 				drawCell(g, board.cell(i, j), i, j);
 			}
 		}
+		int fontSize = 18;
+		g.setFont(new Font(FONT_NAME, Font.PLAIN, fontSize));
+		g.drawString("Score: " + board.getScore(), 0, this.getSize().height - fontSize);//365);
 	}
 	
 	private void drawCell(Graphics g2, Optional<Integer> cell, int x, int y) {
@@ -36,7 +45,7 @@ public class BoardPanel extends JPanel{
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
 				RenderingHints.VALUE_STROKE_NORMALIZE);
-		int value = cell.isPresent() ? cell.get().intValue() : 0;
+		int value = cell.isPresent() ? cell.get() : 0;
 		int xOffset = offsetCoors(x);
 		int yOffset = offsetCoors(y);
 		g.setColor(getBackground(value));
@@ -52,8 +61,6 @@ public class BoardPanel extends JPanel{
 		if (cell.isPresent())
 			g.drawString(s, xOffset + (CELL_SIZE - w) / 2, yOffset + CELL_SIZE
 					- (CELL_SIZE - h) / 2 - 2);
-		g.setFont(new Font(FONT_NAME, Font.PLAIN, 18));
-		g.drawString("Score: " + 0, 200, 365);
 	}
 	
 	private static int offsetCoors(int arg) {

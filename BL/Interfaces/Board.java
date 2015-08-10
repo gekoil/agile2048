@@ -8,4 +8,7 @@ public interface Board {
 	boolean won();
 	Board flipDiagonally();
 	Board flipHorizontally();
+
+	int getBoardSize();
+	int getScore();
 }
