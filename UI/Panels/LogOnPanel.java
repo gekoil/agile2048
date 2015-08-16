@@ -1,14 +1,18 @@
+package Panels;
+
+import Controller.GameController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class LogOnScreen extends JPanel {
+public class LogOnPanel extends JPanel {
 
     private JTextField username;
-    private Game game;
+    private GameController game;
 
-    public LogOnScreen() {
+    public LogOnPanel() {
         setLookAndFeel();
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -69,7 +73,7 @@ public class LogOnScreen extends JPanel {
         SwingUtilities.updateComponentTreeUI(this);
     }
 
-    public void registerToLogin(Game game) {
+    public void registerToLogin(GameController game) {
         this.game = game;
     }
 }

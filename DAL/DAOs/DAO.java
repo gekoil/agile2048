@@ -1,14 +1,17 @@
+package DAOs;
+
 import Entities.User;
+import Interfaces.IDAO;
 
 import java.io.*;
 import java.util.HashMap;
 
-public class DAO {
-    private static DAO ourInstance = new DAO();
+public class DAO implements IDAO{
+    private static final DAO ourInstance = new DAO();
     private static final String FILE_NAME = "users.bin";
     private HashMap<String, User> users;
 
-    public static DAO getInstance() {
+    public static IDAO getInstance() {
         return ourInstance;
     }
 
@@ -33,15 +36,18 @@ public class DAO {
 
     }
 
+    @Override
     public User getUser(String username) {
         return users.get(username);
     }
 
+    @Override
     public boolean storeUser(User user) {
         users.put(user.name, user);
         return true;
     }
 
+    @Override
     public void closeDao() {
         try {
             File saveFile = new File(FILE_NAME);

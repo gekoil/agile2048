@@ -1,4 +1,7 @@
 package Interfaces;
+
+import Controller.GameController;
+
 import java.util.Optional;
 
 public interface Board {
@@ -11,4 +14,6 @@ public interface Board {
 
 	int getBoardSize();
 	int getScore();
+
+	void setControl(GameController game);
 }

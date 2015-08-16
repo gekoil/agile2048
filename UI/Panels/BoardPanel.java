@@ -1,7 +1,13 @@
+package Panels;
+
 import Interfaces.Board;
+import Interfaces.Direction;
+import Boards.DefaultBoard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Optional;
 
 public class BoardPanel extends JPanel {
@@ -13,15 +19,36 @@ public class BoardPanel extends JPanel {
 	private static final int CELL_MARGIN = 16;
 	private Board board;
 
-	BoardPanel() {
+	public BoardPanel() {
 		this(new DefaultBoard());
 	}
 
-	BoardPanel(Board board) {
+	public BoardPanel(Board newBoard) {
 		super();
-		this.board = board;
-		int size = board.getBoardSize() * (CELL_MARGIN + CELL_SIZE) + CELL_MARGIN;
+		this.board = newBoard;
+		int size = newBoard.getBoardSize() * (CELL_MARGIN + CELL_SIZE) + CELL_MARGIN;
 		setSize(size, size + CELL_SIZE);
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_UP:
+						board.move(Direction.Up);
+						break;
+					case KeyEvent.VK_DOWN:
+						board.move(Direction.Down);
+						break;
+					case KeyEvent.VK_LEFT:
+						board.move(Direction.Left);
+						break;
+					case KeyEvent.VK_RIGHT:
+						board.move(Direction.Right);
+						break;
+				}
+				repaint();
+			}
+		});
+
 	}
 	
 	@Override

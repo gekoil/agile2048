@@ -1,7 +1,10 @@
+import Controller.GameController;
+import DAOs.DAO;
+
 public class Main {
 
 	public static void main(String[] args) {
-		Game game = new Game();
+		GameController game = new GameController(DAO.getInstance());
 		game.LaunchGame();
 	}
 }
