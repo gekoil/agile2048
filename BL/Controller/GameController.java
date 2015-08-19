@@ -71,6 +71,7 @@ public class GameController {
         SettingsPanel settings = new SettingsPanel();
         settings.registerToSet(this);
 
+        gameFrame.setSize(DEFAULT_FRAME_SIZE[0], DEFAULT_FRAME_SIZE[1]);
         gameFrame.getContentPane().removeAll();
         gameFrame.getContentPane().add(settings);
         gameFrame.validate();
@@ -95,13 +96,11 @@ public class GameController {
                 throw new InputMismatchException("Invalid Difficulty!");
         }
         board.setControl(this);
-        if (boardPanel == null) {
-            boardPanel = new BoardPanel(board);
-        }
+        boardPanel = new BoardPanel(board);
         boardPanel.setFocusable(true);
 
+        gameFrame.setSize(boardPanel.getSize());
         gameFrame.getContentPane().removeAll();
-        gameFrame.setSize(DEFAULT_FRAME_SIZE[0], DEFAULT_FRAME_SIZE[1]);
         gameFrame.getContentPane().add(boardPanel);
         gameFrame.validate();
         gameFrame.update(gameFrame.getGraphics());

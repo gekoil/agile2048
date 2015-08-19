@@ -13,15 +13,16 @@ import java.util.Optional;
 public class DefaultBoard implements Board {
 
 	private static final int[] startValues = { 2, 4 };
-	private static final int[] possibleBValues = { 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048 };
+	//private static final int[] possibleBValues = { 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048 };
 	private static final int DEFAULT_SIZE = 4;
 	private static final int DEFAULT_TARGET_SCORE = 2048;
 	private static final Difficulty DIFFICULTY = Difficulty.NORMAL;
-	private Optional<Integer>[][] cells;
 	private int boardSize;
 	private int score;
 	private int targetScore;
 	private GameController controller;
+
+	protected Optional<Integer>[][] cells;
 
 	public DefaultBoard() {
 		this(DEFAULT_SIZE, DEFAULT_TARGET_SCORE);
